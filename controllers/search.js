@@ -7,11 +7,7 @@ module.exports.controller = function(app) {
    */
   app.get('/search', function(req, res) {
     console.log("Search")
-    var q = req.query.q;
-    if (!q) {
-      res.send(406);
-      return;
-    }
+    var q = encodeURIComponent(req.query.q || "");
 
     app.get('tpb').search(q
       //, {category: '208'}
@@ -23,13 +19,7 @@ module.exports.controller = function(app) {
         return;
       }
 
-      for (var i = 0; i < results.length; i++)
-        results[i].score = parseInt(results[i].seeders) + parseInt(results[i].leechers);
-      results.sort(function(a, b) {return b.score - a.score});
-
-      var top5 = results.slice(0, results.length > 5 ? 5 : results.length);
-
-      res.json({'results':results});
+      res.json({'results': results});
     }).catch(function(err){
       console.log(err);
     });
