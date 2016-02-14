@@ -13,13 +13,15 @@ module.exports.controller = function(app) {
       //, {category: '208'}
     ).then(function(results){
       if (results.length == 0) {
-        res.json({'results':results});
-        res.send(200);
         console.log("no results found");
-        return;
+        // res.json({'results':results});
+        // res.send(200);
+        // return;
       }
 
-      res.json({'results': results});
+      res.status(200);
+      var resultObj = {results: results};
+      res.send(JSON.stringify(resultObj));
     }).catch(function(err){
       console.log(err);
     });
