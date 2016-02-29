@@ -1,9 +1,10 @@
-var tpb        = require('thepiratebay'),
-    express    = require('express'),
-    log4js     = require('log4js'),
-    http       = require('http'),
-    fs         = require('fs'),
-    app        = express();
+var tpb     = require('thepiratebay'),
+    express = require('express'),
+    log4js  = require('log4js'),
+    http    = require('http'),
+    fs      = require('fs'),
+    cors    = require('cors'),
+    app     = express();
 
 //set up logger
 log4js.configure({
@@ -14,6 +15,7 @@ log4js.configure({
 });
 var logger = log4js.getLogger('trace');
 
+app.use(cors());
 app.use(function(req, res, next) {
   logger.info('%s %s', req.method, req.url);
 
